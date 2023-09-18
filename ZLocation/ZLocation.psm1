@@ -240,17 +240,17 @@ function Invoke-ZLocation
     Set-ZLocation -match $match
 }
 
-function Get-FrequentFolders {
-    If (((Get-Variable IsWindows -ErrorAction Ignore | Select-Object -ExpandProperty Value) -or 
-    $PSVersionTable.PSVersion.Major -lt 6) -and ([environment]::OSVersion.Version.Major -ge 10)) {
-        if (-not $ExecutionContext.SessionState.LanguageMode -eq 'ConstrainedLanguage') {
-            $QuickAccess = New-Object -ComObject shell.application
-            $QuickAccess.Namespace("shell:::{679f85cb-0220-4080-b29b-5540cc05aab6}").Items() |
-                Where-Object IsFolder |
-                Select-Object -ExpandProperty Path
-        }
-    }
-}
+# function Get-FrequentFolders {
+#     If (((Get-Variable IsWindows -ErrorAction Ignore | Select-Object -ExpandProperty Value) -or 
+#     $PSVersionTable.PSVersion.Major -lt 6) -and ([environment]::OSVersion.Version.Major -ge 10)) {
+#         if (-not $ExecutionContext.SessionState.LanguageMode -eq 'ConstrainedLanguage') {
+#             $QuickAccess = New-Object -ComObject shell.application
+#             $QuickAccess.Namespace("shell:::{679f85cb-0220-4080-b29b-5540cc05aab6}").Items() |
+#                 Where-Object IsFolder |
+#                 Select-Object -ExpandProperty Path
+#         }
+#     }
+# }
 
 function Clear-NonExistentZLocation {
     $paths=(Get-ZLocation).Keys
@@ -263,11 +263,11 @@ function Clear-NonExistentZLocation {
     }
 }
 
-Get-FrequentFolders | ForEach-Object {
-    if (Test-Path $_) {
-        Add-ZWeight -Path $_ -Weight 0
-    }
-}
+#Get-FrequentFolders | ForEach-Object {
+#    if (Test-Path $_) {
+#        Add-ZWeight -Path $_ -Weight 0
+#    }
+#}
 
 Register-PromptHook
 
